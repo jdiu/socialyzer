@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Button, Table } from 'semantic-ui-react';
+import { postData } from '../../lib/fetch';
 
 const tableHeaders = ['Identity Attack', 'Insult', 'Obscenity', 'Severe Toxicity', 'Sexually Explicit', 'Threat', 'Toxicity'];
 
-export default function TextAnalyzer() {
+const TextAnalyzer = () => {
   const [analyzeText, setAnalyzeText] = useState('');
   const [predictions, setPredictions] = useState([]);
 
@@ -19,23 +20,9 @@ export default function TextAnalyzer() {
   }
 
   async function runAnalyzer () {
-    const response = await fetch('http://localhost:5000/classify/', {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      redirect: 'follow', // manual, *follow, error
-      referrer: 'no-referrer', // no-referrer, *client
-      body: JSON.stringify({text: analyzeText})
-    });
-
-    const data = await response.json();
-
+    const data = await postData('http://localhost:5000/classify/', {text: analyzeText});
     console.log(data);
-    // setPredictions(newPredictions);
+    setPredictions(data);
   }
 
   return (
@@ -43,7 +30,6 @@ export default function TextAnalyzer() {
       {/* <a target="_blank" rel="noopener noreferrer" href="https://www.reddit.com/api/v1/authorize?client_id=lFL50Lb5PCEI-g&response_type=code&state=RANDOM_STRING&redirect_uri=http://localhost:3000/&duration=temporary&scope=identity%20history">
         <Button>Authenticate</Button>
       </a> */}
-      <br />
       <Form>
         <Form.TextArea name="analyzeText" placeholder='Type something mean!' onChange={(e) => setAnalyzeText(e.target.value)} />
         <Button onClick={() => runAnalyzer()}>Analyze!</Button>
@@ -66,3 +52,5 @@ export default function TextAnalyzer() {
     </div>
   )
 }
+
+export default TextAnalyzer;

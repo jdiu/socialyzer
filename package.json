@@ -5,11 +5,13 @@
   "dependencies": {
     "@tensorflow-models/toxicity": "^1.2.0",
     "@tensorflow/tfjs": "^1.2.11",
+    "mobx-react": "^6.1.4",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-scripts": "3.2.0",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.88.1"
+    "semantic-ui-react": "^0.88.1",
+    "socket.io-client": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
